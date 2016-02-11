@@ -351,6 +351,8 @@ class TaskBase(evil):
 		:rtype: string
 		"""
 		msg = getattr(self, 'last_cmd', '')
+		if not isinstance(msg, str):
+			msg = ' '.join(repr(x) if ' ' in x else x for x in msg)
 		name = getattr(self.generator, 'name', '')
 		if getattr(self, "err_msg", None):
 			return self.err_msg
@@ -358,11 +360,11 @@ class TaskBase(evil):
 			return 'task in %r was not executed for some reason: %r' % (name, self)
 		elif self.hasrun == CRASHED:
 			try:
-				return ' -> task in %r failed (exit status %r): %r\n%r' % (name, self.err_code, self, msg)
+				return ' -> task in %r failed (exit status %r): %r\n%s' % (name, self.err_code, self, msg)
 			except AttributeError:
-				return ' -> task in %r failed: %r\n%r' % (name, self, msg)
+				return ' -> task in %r failed: %r\n%s' % (name, self, msg)
 		elif self.hasrun == MISSING:
-			return ' -> missing files in %r: %r\n%r' % (name, self, msg)
+			return ' -> missing files in %r: %r\n%s' % (name, self, msg)
 		else:
 			return 'invalid status for task in %r: %r' % (name, self.hasrun)
 
