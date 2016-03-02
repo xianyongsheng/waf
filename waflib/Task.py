@@ -48,7 +48,7 @@ def f(tsk):
 	wd = getattr(tsk, 'cwd', None)
 	p = env.get_flat
 	tsk.last_cmd = cmd = \'\'\' %s \'\'\' % s
-	return tsk.exec_command(cmd, cwd=wd, env=env.env or None)
+	return tsk.exec_command(cmd, cwd=wd, env=env.env or None, **tsk.cmd_kw)
 '''
 
 COMPILE_TEMPLATE_NOSHELL = '''
@@ -64,7 +64,7 @@ def f(tsk):
 	tsk.last_cmd = lst = []
 	%s
 	lst = [x for x in lst if x]
-	return tsk.exec_command(lst, cwd=wd, env=env.env or None)
+	return tsk.exec_command(lst, cwd=wd, env=env.env or None, **tsk.cmd_kw)
 '''
 
 classes = {}
@@ -413,6 +413,9 @@ class Task(TaskBase):
 
 	shell = False
 	"""Execute the command with the shell (class attribute)"""
+
+	cmd_kw = {}
+	"""Dictionary of extra keyword arguments to be passed to :py:meth:`waflib.Task.TaskBase.exec_command` if run_str is defined"""
 
 	def __init__(self, *k, **kw):
 		TaskBase.__init__(self, *k, **kw)
