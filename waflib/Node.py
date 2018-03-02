@@ -513,7 +513,7 @@ class Node(object):
 
 		:rtype: string
 		"""
-                return os.path.relpath(self.abspath())
+		return os.path.relpath(self.abspath())
 
 
 	def is_child_of(self, node):
