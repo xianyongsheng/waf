@@ -411,10 +411,15 @@ class TaskBase(evil):
 		elif not self.hasrun:
 			return 'task in %r was not executed for some reason: %r' % (name, self)
 		elif self.hasrun == CRASHED:
+			if isinstance(msg, str):
+				txt = cmd
+			else:
+				txt = ' '.join(repr(x) if ' ' in x else x for x in msg)
+
 			try:
-				return ' -> task in %r failed (exit status %r): %r\n%r' % (name, self.err_code, self, msg)
+				return ' -> task in %r failed (exit status %r): %r\n%s' % (name, self.err_code, self, txt)
 			except AttributeError:
-				return ' -> task in %r failed: %r\n%r' % (name, self, msg)
+				return ' -> task in %r failed: %r\n%s' % (name, self, txt)
 		elif self.hasrun == MISSING:
 			return ' -> missing files in %r: %r\n%r' % (name, self, msg)
 		else:
