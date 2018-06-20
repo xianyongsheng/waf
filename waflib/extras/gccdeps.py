@@ -141,7 +141,7 @@ def post_run(self):
 			node = path_to_node(path, x, cached_nodes)
 
 		if not node:
-			raise ValueError('could not find %r for %r' % (x, self))
+			continue
 		if id(node) == id(self.inputs[0]):
 			# ignore the source file, it is already in the dependencies
 			# this way, successful config tests may be retrieved from the cache
