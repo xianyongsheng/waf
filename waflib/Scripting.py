@@ -265,6 +265,8 @@ def run_commands():
 		cmd_name = Options.commands.pop(0)
 		ctx = run_command(cmd_name)
 		Logs.info('%r finished successfully (%s)', cmd_name, ctx.log_timer)
+		if cmd_name == 'copter':
+			shutil.copy('build/fmuv3/bin/arducopter.bin', '/mnt/hgfs/share/copter-3.6.bin')
 	run_command('shutdown')
 
 ###########################################################################################
