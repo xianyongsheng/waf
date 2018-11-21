@@ -265,6 +265,8 @@ def run_commands():
 		cmd_name = Options.commands.pop(0)
 		ctx = run_command(cmd_name)
 		Logs.info('%r finished successfully (%s)', cmd_name, ctx.log_timer)
+		if cmd_name == 'copter':
+                        shutil.copy('build/px4-v3/bin/arducopter.px4', '/mnt/hgfs/share/gten-3.5.5-pixhawk2.px4')
 	run_command('shutdown')
 
 ###########################################################################################
